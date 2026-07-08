@@ -7,6 +7,7 @@ import { FiMail, FiLock, FiAlertCircle } from 'react-icons/fi';
 import { GlassCard, Button, Input } from '@sk-careerhub/ui';
 import { useAuthStore } from '../../store/auth.store';
 import { api } from '../../services/api';
+import { motion } from 'framer-motion';
 
 const loginFormSchema = z.object({
   email: z.string().email('Enter a valid email address'),
@@ -123,4 +124,4 @@ export const LoginPage: React.FC = () => {
     </div>
   );
 };
-import { motion } from 'framer-motion';
+

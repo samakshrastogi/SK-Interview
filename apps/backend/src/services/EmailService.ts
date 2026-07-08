@@ -15,6 +15,8 @@ export class EmailService {
     const pass = process.env.SMTP_PASS || process.env.EMAIL_PASS;
     const secure = process.env.SMTP_SECURE === 'true' || port === 465;
 
+    console.log(`[EmailService] SMTP Init -> Host: ${host}, Port: ${port}, Secure: ${secure}, User: ${user}`);
+
     // If Ethereal defaults or no user/pass provided, create an ethereal test account on the fly
     if (host === 'smtp.ethereal.email' && (!user || user === 'your_ethereal_user_here')) {
       logger.info('Initializing dynamic Ethereal Mail test account...');

@@ -38,10 +38,10 @@ export class CrawlerService {
       vacancies: 1056,
       selectionProcess: ['Preliminary Exam (Objective)', 'Main Exam (Descriptive)', 'Interview (Personality Test)'],
       importantDates: {
-        notificationDate: new Date('2026-02-14'),
-        applicationStartDate: new Date('2026-02-14'),
-        applicationEndDate: new Date('2026-03-05'),
-        examDate: new Date('2026-05-26'),
+        notificationDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
+        applicationStartDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
+        applicationEndDate: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000), // 25 days from now (future)
+        examDate: new Date(Date.now() + 85 * 24 * 60 * 60 * 1000), // 85 days from now
       },
       fees: {
         general: 100,
@@ -96,10 +96,10 @@ export class CrawlerService {
       vacancies: 8400,
       selectionProcess: ['Tier I (Objective Computer Based Test)', 'Tier II (Objective & Typing Test)'],
       importantDates: {
-        notificationDate: new Date('2026-06-10'),
-        applicationStartDate: new Date('2026-06-11'),
-        applicationEndDate: new Date('2026-07-10'),
-        examDate: new Date('2026-09-15'),
+        notificationDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
+        applicationStartDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
+        applicationEndDate: new Date(Date.now() + 35 * 24 * 60 * 60 * 1000), // 35 days from now (future)
+        examDate: new Date(Date.now() + 115 * 24 * 60 * 60 * 1000), // 115 days from now
       },
       fees: {
         general: 100,
@@ -143,10 +143,10 @@ export class CrawlerService {
       vacancies: 291,
       selectionProcess: ['Phase I (Objective Online Test)', 'Phase II (Objective & Descriptive)', 'Interview'],
       importantDates: {
-        notificationDate: new Date('2026-07-01'),
-        applicationStartDate: new Date('2026-07-01'),
-        applicationEndDate: new Date('2026-07-21'),
-        examDate: new Date('2026-09-08'),
+        notificationDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // 10 days ago
+        applicationStartDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // 10 days ago
+        applicationEndDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), // 15 days from now (future)
+        examDate: new Date(Date.now() + 75 * 24 * 60 * 60 * 1000), // 75 days from now
       },
       fees: {
         general: 850,

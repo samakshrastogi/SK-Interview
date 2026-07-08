@@ -41,7 +41,10 @@ export class ExamRepository {
 
   async search(query: string): Promise<IExamDocument[]> {
     return Exam.find(
-      { $text: { $search: query } },
+      { 
+        $text: { $search: query },
+        'importantDates.applicationEndDate': { $gte: new Date() }
+      },
       { score: { $meta: 'textScore' } }
     )
       .sort({ score: { $meta: 'textScore' } })
@@ -56,7 +59,9 @@ export class ExamRepository {
     maxAge?: number;
     search?: string;
   }): Promise<IExamDocument[]> {
-    const mongoQuery: any = {};
+    const mongoQuery: any = {
+      'importantDates.applicationEndDate': { $gte: new Date() }
+    };
 
     if (filters.status) {
       mongoQuery.status = filters.status;

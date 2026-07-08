@@ -1,7 +1,4 @@
-import dotenv from 'dotenv';
-import path from 'path';
-// Load environment variables first, resolving absolute path relative to backend folder
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
+import './config/env';
 
 import express, { Request, Response, NextFunction } from 'express';
 import helmet from 'helmet';

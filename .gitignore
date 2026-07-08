@@ -1,8 +1,20 @@
 # Dependency directories
 node_modules/
+**/node_modules/
+
+# TypeScript build files
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# Compiled JavaScript in source folders (TSC in-place compilation)
+**/src/**/*.js
+**/src/**/*.js.map
+**/src/**/*.d.ts
+**/src/**/*.d.ts.map
 
 # Production builds
 dist/
+**/dist/
 build/
 .svelte-kit/
 .next/
