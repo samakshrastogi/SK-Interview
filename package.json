@@ -1,0 +1,21 @@
+{
+  "name": "sk-careerhub-ai",
+  "version": "1.0.0",
+  "private": true,
+  "description": "India's AI-Powered Government Career & Recruitment Platform",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w @sk-careerhub/backend\" \"npm run dev -w @sk-careerhub/frontend\"",
+    "build": "npm run build --workspaces --if-present",
+    "start": "node scripts/start-all.js",
+    "type-check": "npm run type-check --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "concurrently": "^8.2.2"
+  }
+}

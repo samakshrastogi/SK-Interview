@@ -1,0 +1,45 @@
+# Dependency directories
+node_modules/
+
+# Production builds
+dist/
+build/
+.svelte-kit/
+.next/
+out/
+
+# Local environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+logs/
+*.log
+
+# Editor & OS settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# Diagnostic / Coverage
+coverage/
+.nyc_output
+
+# Docker data volume fallbacks
+mongo_data/
+redis_data/
