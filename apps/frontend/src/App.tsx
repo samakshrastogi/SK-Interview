@@ -9,7 +9,12 @@ import { RegisterPage } from './pages/auth/RegisterPage';
 import { VerifyOtpPage } from './pages/auth/VerifyOtpPage';
 import { ForgotPasswordPage } from './pages/auth/ForgotPasswordPage';
 import { ResetPasswordPage } from './pages/auth/ResetPasswordPage';
-import { Dashboard } from './pages/Dashboard';
+import { DashboardLayout } from './pages/DashboardLayout';
+import { GovExamsPage } from './pages/GovExamsPage';
+import { PrivateJobsPage } from './pages/PrivateJobsPage';
+import { MockInterviewPage } from './pages/MockInterviewPage';
+import { MentorsPage } from './pages/MentorsPage';
+import { ProfilePage } from './pages/ProfilePage';
 
 const queryClient = new QueryClient();
 
@@ -89,7 +94,14 @@ export const App: React.FC = () => {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
 
           {/* Guarded Views */}
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
+            <Route index element={<Navigate to="exams" replace />} />
+            <Route path="exams" element={<GovExamsPage />} />
+            <Route path="private-jobs" element={<PrivateJobsPage />} />
+            <Route path="mock-interview" element={<MockInterviewPage />} />
+            <Route path="mentors" element={<MentorsPage />} />
+            <Route path="profile" element={<ProfilePage />} />
+          </Route>
 
           {/* Catch-all Redirect */}
           <Route path="*" element={<Navigate to="/" replace />} />
