@@ -21,6 +21,7 @@ app.use(helmet());
 app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static('uploads'));
 
 // Custom tiny Cookie Parser middleware to parse request cookies securely without extra package dependency
 app.use((req: any, res: Response, next: NextFunction) => {

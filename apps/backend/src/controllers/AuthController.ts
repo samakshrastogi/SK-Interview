@@ -3,6 +3,8 @@ import { AuthenticatedRequest } from '../middleware/auth';
 import { authService } from '../services/AuthService';
 import { auditLogRepository } from '../repositories/AuditLogRepository';
 import { AppError } from '../middleware/error';
+import fs from 'fs';
+import { resumeParserService } from '../services/ResumeParserService';
 import {
   registerSchema,
   loginSchema,
@@ -252,6 +254,129 @@ export class AuthController {
         data: {
           user: user.toJSON(),
         },
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async parseResume(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if (!req.file) {
+        throw new AppError(400, 'Please upload a PDF file containing your resume.');
+      }
+
+      const parsedData = await resumeParserService.parsePDF(req.file.path);
+      
+      // Clean up uploaded file from disk after parsing
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (err) {
+        // ignore deletion errors
+      }
+
+      res.status(200).json({
+        status: 'success',
+        data: {
+          parsedData
+        }
+      });
+    } catch (error) {
+      // Ensure file cleanup if parsing crashes mid-way
+      if (req.file) {
+        try {
+          fs.unlinkSync(req.file.path);
+        } catch (err) {
+          // ignore
+        }
+      }
+      next(error);
+    }
+  }
+
+  async updateProfile(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if (!req.user) {
+        throw new AppError(401, 'Unauthorized');
+      }
+
+      const { fullName, avatar, profile } = req.body;
+
+      const user = await userRepository.findById(req.user.id);
+      if (!user) {
+        throw new AppError(404, 'User not found');
+      }
+
+      if (fullName) {
+        user.fullName = fullName;
+      }
+      if (avatar) {
+        user.avatar = avatar;
+      }
+
+      if (profile) {
+        user.profile = {
+          ...user.profile,
+          ...profile
+        };
+        user.profileCompleted = true;
+      }
+
+      await user.save();
+
+      // Log Audit Trail
+      await auditLogRepository.log({
+        userId: user.id,
+        userEmail: user.email,
+        action: 'UPDATE_PROFILE',
+        details: 'User updated profile details and/or avatar choice.',
+        ipAddress: req.ip,
+        userAgent: req.headers['user-agent'],
+      });
+
+      res.status(200).json({
+        status: 'success',
+        data: {
+          user: user.toJSON()
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async uploadAvatar(req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if (!req.user) {
+        throw new AppError(401, 'Unauthorized');
+      }
+
+      if (!req.file) {
+        throw new AppError(400, 'Please upload an image file.');
+      }
+
+      const user = await userRepository.findById(req.user.id);
+      if (!user) {
+        throw new AppError(404, 'User not found');
+      }
+
+      user.avatar = `/uploads/${req.file.filename}`;
+      await user.save();
+
+      await auditLogRepository.log({
+        userId: user.id,
+        userEmail: user.email,
+        action: 'UPLOAD_AVATAR',
+        details: 'User uploaded a custom profile picture.',
+        ipAddress: req.ip,
+        userAgent: req.headers['user-agent'],
+      });
+
+      res.status(200).json({
+        status: 'success',
+        data: {
+          user: user.toJSON()
+        }
       });
     } catch (error) {
       next(error);

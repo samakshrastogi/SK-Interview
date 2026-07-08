@@ -27,6 +27,7 @@ export interface IUser {
   role: UserRole;
   isEmailVerified: boolean;
   profileCompleted: boolean;
+  avatar?: string;
   profile?: IUserProfile;
   createdAt: Date;
   updatedAt: Date;

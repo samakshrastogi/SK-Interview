@@ -72,6 +72,10 @@ const UserSchema = new Schema<IUserDocument>({
     type: Boolean, 
     default: false 
   },
+  avatar: {
+    type: String,
+    default: 'avatar1'
+  },
   profile: { 
     type: UserProfileSchema,
     default: () => ({})
@@ -90,7 +94,7 @@ const UserSchema = new Schema<IUserDocument>({
 });
 
 // Pre-save hashing for password
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function(this: any, next) {
   if (!this.isModified('passwordHash')) return next();
   try {
     const salt = await bcrypt.genSalt(10);
@@ -101,7 +105,7 @@ UserSchema.pre('save', async function(next) {
   }
 });
 
-UserSchema.methods.comparePassword = async function(candidatePassword: string): Promise<boolean> {
+UserSchema.methods.comparePassword = async function(this: any, candidatePassword: string): Promise<boolean> {
   return bcrypt.compare(candidatePassword, this.passwordHash);
 };
 
